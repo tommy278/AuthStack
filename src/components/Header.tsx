@@ -61,7 +61,7 @@ export default function Header() {
           </Link>
 
           {user ? (
-            <Logout />
+            <Logout onLogout={() => setIsOpen(false)} />
           ) : (
             <>
               <Link
