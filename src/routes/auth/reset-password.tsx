@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/supabase'
 import { useNavigate } from '@tanstack/react-router'
 import { useUser } from '@/context/UserContext'
+import { passwordSchema } from '@/lib/helpers/validators'
 
 export const Route = createFileRoute('/auth/reset-password')({
   component: RouteComponent,
@@ -46,8 +47,9 @@ function RouteComponent() {
     defaultValues: defaultPasswords,
     onSubmit: async ({ value, formApi }) => {
       if (value.newPassword === value.confirmPassword) {
-        const password = value.newPassword
-        const { error } = await supabase.auth.updateUser({ password })
+        const { error } = await supabase.auth.updateUser({
+          password: value.newPassword,
+        })
         formApi.reset()
 
         if (error) {
@@ -81,6 +83,12 @@ function RouteComponent() {
       <div>
         <passwordForm.Field
           name="newPassword"
+          validators={{
+            onChange: ({ value }) => {
+              const result = passwordSchema.safeParse(value)
+              return result.success ? undefined : result.error.errors[0].message
+            },
+          }}
           children={(field) => (
             <>
               <input
@@ -90,6 +98,11 @@ function RouteComponent() {
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
+              {field.state.meta.errors.map((error, i) => (
+                <div key={i} className="text-red-500">
+                  {error}
+                </div>
+              ))}
             </>
           )}
         />
@@ -97,6 +110,14 @@ function RouteComponent() {
       <div>
         <passwordForm.Field
           name="confirmPassword"
+          validators={{
+            onChange: ({ value }) => {
+              if (value !== passwordForm.getFieldValue('newPassword')) {
+                return 'Passwords do not match'
+              }
+              return undefined
+            },
+          }}
           children={(field) => (
             <>
               <input
@@ -106,6 +127,11 @@ function RouteComponent() {
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
+              {field.state.meta.errors.map((error, i) => (
+                <div key={i} className="text-red-500">
+                  {error}
+                </div>
+              ))}
             </>
           )}
         />

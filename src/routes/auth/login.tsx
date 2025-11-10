@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase/supabase'
 import { loginFn } from '@/lib/serverFunctions/loginFn'
 import { useUser } from '@/context/UserContext'
 import { Link } from '@tanstack/react-router'
+import { emailSchema, passwordSchema } from '@/lib/helpers/validators'
 
 export const Route = createFileRoute('/auth/login')({
   component: RouteComponent,
@@ -57,10 +58,10 @@ function RouteComponent() {
         <form.Field
           name="email"
           validators={{
-            onChange: ({ value }) =>
-              !value.includes('@')
-                ? 'Invalid email format: must include @'
-                : undefined,
+            onChange: ({ value }) => {
+              const result = emailSchema.safeParse(value)
+              return result.success ? undefined : result.error.errors[0].message
+            },
           }}
           children={(field) => (
             <>
@@ -71,7 +72,7 @@ function RouteComponent() {
                 onChange={(e) => field.handleChange(e.target.value)}
               />
               {field.state.meta.errors.map((error, i) => (
-                <div key={i} className="text-red-200">
+                <div key={i} className="text-red-500">
                   {error}
                 </div>
               ))}
@@ -83,8 +84,10 @@ function RouteComponent() {
         <form.Field
           name="password"
           validators={{
-            onChange: ({ value }) =>
-              value.length < 5 ? 'Password not long enough' : undefined,
+            onChange: ({ value }) => {
+              const result = passwordSchema.safeParse(value)
+              return result.success ? undefined : result.error.errors[0].message
+            },
           }}
           children={(field) => (
             <>
@@ -95,7 +98,7 @@ function RouteComponent() {
                 onChange={(e) => field.handleChange(e.target.value)}
               />
               {field.state.meta.errors.map((error, i) => (
-                <div key={i} className="text-red-200">
+                <div key={i} className="text-red-500">
                   {error}
                 </div>
               ))}
@@ -115,7 +118,6 @@ function RouteComponent() {
           })
         }}
       >
-        {' '}
         Sign in with Google
       </button>
       <button
@@ -129,7 +131,6 @@ function RouteComponent() {
           })
         }}
       >
-        {' '}
         Sign in with GitHub
       </button>
 

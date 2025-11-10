@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import { supabase } from '@/lib/supabase/supabase'
+import { emailSchema } from '@/lib/helpers/validators'
 
 export const Route = createFileRoute('/auth/forgot-password')({
   component: RouteComponent,
@@ -32,6 +33,12 @@ function RouteComponent() {
       <div>
         <form.Field
           name="email"
+          validators={{
+            onChange: ({ value }) => {
+              const result = emailSchema.safeParse(value)
+              return result.success ? undefined : result.error.errors[0].message
+            },
+          }}
           children={(field) => (
             <>
               <input
@@ -40,6 +47,11 @@ function RouteComponent() {
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
+              {field.state.meta.errors.map((error, i) => (
+                <div key={i} className="text-red-500">
+                  {error}
+                </div>
+              ))}
             </>
           )}
         />
