@@ -1,7 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useForm } from "@tanstack/react-form";
 import { supabase } from "@/lib/supabase/supabase";
-import FieldInfo from "@/components/FieldInfo";
 
 export const Route = createFileRoute('/auth/register')({
   component: RouteComponent,
@@ -57,7 +56,6 @@ function RouteComponent() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                 />
-                <FieldInfo field={field}/>
               </>
             )}
           />
@@ -77,7 +75,6 @@ function RouteComponent() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                 />
-                <FieldInfo field={field}/>
               </>
             )}
           />
@@ -97,7 +94,6 @@ function RouteComponent() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                 />
-                <FieldInfo field={field}/>
               </>
             )}
           />

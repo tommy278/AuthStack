@@ -2,7 +2,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useForm } from "@tanstack/react-form";
 import { useEffect, useState } from "react";
 import { supabase} from "@/lib/supabase/supabase";
-import FieldInfo from "@/components/FieldInfo";
 import { useNavigate } from '@tanstack/react-router'
 import { useUser } from "@/context/UserContext"
 
@@ -90,7 +89,6 @@ function RouteComponent() {
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
                             />
-                        <FieldInfo field={field} />
                     </>
                 )}
                 />
@@ -107,7 +105,6 @@ function RouteComponent() {
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
                             />
-                        <FieldInfo field={field} />
                     </>
                 )}
                 />
