@@ -46,23 +46,48 @@ export default function Header() {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto p-4">
+        <nav className="flex flex-1 flex-col gap-2 overflow-y-auto p-4">
           <Link
             to="/"
             onClick={() => setIsOpen(false)}
-            className="mb-2 flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-800"
+            className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-800"
             activeProps={{
               className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors',
             }}
           >
             <Home size={20} />
             <span className="font-medium">Home</span>
           </Link>
 
-          {/* Demo Links Start */}
-          {user ? <Logout /> : <p>"You are not logged in"</p>}
-          {/* Demo Links End */}
+          {user ? (
+            <Logout />
+          ) : (
+            <>
+              <Link
+                to="/auth/login"
+                onClick={() => setIsOpen(false)}
+                activeProps={{
+                  className:
+                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors',
+                }}
+                className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-800"
+              >
+                Log In
+              </Link>
+              <Link
+                activeProps={{
+                  className:
+                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors',
+                }}
+                to="/auth/register"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-800"
+              >
+                Register
+              </Link>
+            </>
+          )}
         </nav>
       </aside>
     </>

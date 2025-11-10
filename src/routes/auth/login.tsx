@@ -8,6 +8,9 @@ import { emailSchema, passwordSchema } from '@/lib/helpers/validators'
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
 
+const callbackUrl: string =
+  import.meta.env.VITE_APP_CALLBACK_URL || 'http://localhost:3000/auth/callback'
+
 export const Route = createFileRoute('/auth/login')({
   component: RouteComponent,
 })
@@ -135,7 +138,7 @@ function RouteComponent() {
               await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                  redirectTo: 'http://localhost:3000/auth/callback',
+                  redirectTo: callbackUrl,
                 },
               })
             }}
@@ -150,7 +153,7 @@ function RouteComponent() {
               await supabase.auth.signInWithOAuth({
                 provider: 'github',
                 options: {
-                  redirectTo: 'http://localhost:3000/auth/callback',
+                  redirectTo: callbackUrl,
                 },
               })
             }}
