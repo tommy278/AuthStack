@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { setSession } from "@/lib/serverFunctions/setSession"
+import { setSessionFn } from "@/lib/serverFunctions/setSessionFn"
 import { useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
 
@@ -17,7 +17,7 @@ export default function CallbackPage() {
       const refresh_token = hash.get("refresh_token")
 
       if (access_token && refresh_token ) {
-        await setSession({ data: {access_token, refresh_token}})
+        await setSessionFn({ data: {access_token, refresh_token}})
         navigate({ to: "/dashboard"})
       } else {
         console.error("No Oauth tokens found")

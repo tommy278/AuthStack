@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getSupabaseServerClient } from "@/lib/supabase/clientSupabase";
 
-export const setSession = createServerFn({ method: "POST"})
+export const setSessionFn = createServerFn({ method: "POST"})
 .inputValidator((d: { access_token: string; refresh_token: string }) => d)
 .handler(async ({data}) => {
     const supabase = getSupabaseServerClient()

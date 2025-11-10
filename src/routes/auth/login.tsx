@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase/supabase";
 import FieldInfo from "@/components/FieldInfo";
 import { loginFn } from "@/lib/serverFunctions/loginFn";
 import { useUser } from "@/context/UserContext"
+import { Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/auth/login')({
   component: RouteComponent,
@@ -116,6 +117,12 @@ function RouteComponent() {
                 }}
             > Sign in with GitHub
             </button>
+
+            <Link 
+                to="/auth/forgot-password"
+            >Forgot Password?
+            </Link>
+            
         </form>
     )
 }

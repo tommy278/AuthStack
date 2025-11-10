@@ -1,10 +1,10 @@
 import { createFileRoute, redirect, Outlet } from '@tanstack/react-router'
-import { getUser } from "@/lib/helpers/getUser";
+import { getUserFn } from "@/lib/serverFunctions/getUserFn";
 
 export const Route = createFileRoute('/_authed')({
   component: AuthedLayout,
   beforeLoad: async () => {
-    const user  = await getUser()
+    const user  = await getUserFn()
     if (!user) {
       console.error("Auth check failed:", 400)
       throw redirect({ to: "/auth/login" })

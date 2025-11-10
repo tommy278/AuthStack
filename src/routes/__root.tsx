@@ -1,7 +1,7 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-import { getUser } from '@/lib/helpers/getUser'
+import { getUser } from '@/lib/serverFunctions/getUserFn'
 import { UserProvider } from "@/context/UserContext";
 import Header from '../components/Header'
 
