@@ -23,40 +23,48 @@ function RouteComponent() {
     },
   })
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        form.handleSubmit()
-      }}
-    >
-      <div>
-        <form.Field
-          name="email"
-          validators={{
-            onChange: ({ value }) => {
-              const result = emailSchema.safeParse(value)
-              return result.success ? undefined : result.error.errors[0].message
-            },
-          }}
-          children={(field) => (
-            <>
-              <input
-                placeholder="Email"
-                value={field.state.value}
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
-              />
-              {field.state.meta.errors.map((error, i) => (
-                <div key={i} className="text-red-500">
-                  {error}
-                </div>
-              ))}
-            </>
-          )}
-        />
-      </div>
-      <button type="submit">Reset Password</button>
-    </form>
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          form.handleSubmit()
+        }}
+        className="form-content"
+      >
+        <div>
+          <form.Field
+            name="email"
+            validators={{
+              onChange: ({ value }) => {
+                const result = emailSchema.safeParse(value)
+                return result.success
+                  ? undefined
+                  : result.error.errors[0].message
+              },
+            }}
+            children={(field) => (
+              <>
+                <input
+                  placeholder="Email"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  className="input-field"
+                />
+                {field.state.meta.errors.map((error, i) => (
+                  <div key={i} className="text-red-500">
+                    {error}
+                  </div>
+                ))}
+              </>
+            )}
+          />
+        </div>
+        <button type="submit" className="button-primary">
+          Reset Password
+        </button>
+      </form>
+    </div>
   )
 }

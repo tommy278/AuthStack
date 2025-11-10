@@ -73,70 +73,79 @@ function RouteComponent() {
   }
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        passwordForm.handleSubmit()
-      }}
-    >
-      <div>
-        <passwordForm.Field
-          name="newPassword"
-          validators={{
-            onChange: ({ value }) => {
-              const result = passwordSchema.safeParse(value)
-              return result.success ? undefined : result.error.errors[0].message
-            },
-          }}
-          children={(field) => (
-            <>
-              <input
-                placeholder="New Password"
-                type="password"
-                value={field.state.value}
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
-              />
-              {field.state.meta.errors.map((error, i) => (
-                <div key={i} className="text-red-500">
-                  {error}
-                </div>
-              ))}
-            </>
-          )}
-        />
-      </div>
-      <div>
-        <passwordForm.Field
-          name="confirmPassword"
-          validators={{
-            onChange: ({ value }) => {
-              if (value !== passwordForm.getFieldValue('newPassword')) {
-                return 'Passwords do not match'
-              }
-              return undefined
-            },
-          }}
-          children={(field) => (
-            <>
-              <input
-                placeholder="Confirm Password"
-                type="password"
-                value={field.state.value}
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
-              />
-              {field.state.meta.errors.map((error, i) => (
-                <div key={i} className="text-red-500">
-                  {error}
-                </div>
-              ))}
-            </>
-          )}
-        />
-      </div>
-      <button type="submit">Reset Password</button>
-    </form>
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          passwordForm.handleSubmit()
+        }}
+        className="form-content"
+      >
+        <div>
+          <passwordForm.Field
+            name="newPassword"
+            validators={{
+              onChange: ({ value }) => {
+                const result = passwordSchema.safeParse(value)
+                return result.success
+                  ? undefined
+                  : result.error.errors[0].message
+              },
+            }}
+            children={(field) => (
+              <>
+                <input
+                  placeholder="New Password"
+                  type="password"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  className="input-field"
+                />
+                {field.state.meta.errors.map((error, i) => (
+                  <div key={i} className="text-red-500">
+                    {error}
+                  </div>
+                ))}
+              </>
+            )}
+          />
+        </div>
+        <div>
+          <passwordForm.Field
+            name="confirmPassword"
+            validators={{
+              onChange: ({ value }) => {
+                if (value !== passwordForm.getFieldValue('newPassword')) {
+                  return 'Passwords do not match'
+                }
+                return undefined
+              },
+            }}
+            children={(field) => (
+              <>
+                <input
+                  placeholder="Confirm Password"
+                  type="password"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  className="input-field"
+                />
+                {field.state.meta.errors.map((error, i) => (
+                  <div key={i} className="text-red-500">
+                    {error}
+                  </div>
+                ))}
+              </>
+            )}
+          />
+        </div>
+        <button type="submit" className="button-primary">
+          Reset Password
+        </button>
+      </form>
+    </div>
   )
 }
