@@ -1,4 +1,4 @@
-### TanStack Auth & Dashboard Foundation
+## TanStack Auth & Dashboard Foundation
 
 # This repository is a foundation for building React applications using TanStack Router, Supabase, and modern authentication patterns. It includes:
 	•	Email/password authentication
