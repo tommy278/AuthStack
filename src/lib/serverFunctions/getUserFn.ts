@@ -1,11 +1,14 @@
-import { createServerFn } from "@tanstack/react-start";
-import { getSupabaseServerClient } from "@/lib/supabase/clientSupabase"
+import { createServerFn } from '@tanstack/react-start'
+import { getSupabaseServerClient } from '@/lib/supabase/clientSupabase'
 
 export const getUserFn = createServerFn({
-  method: "GET",
+  method: 'GET',
 }).handler(async () => {
   const supabase = getSupabaseServerClient()
-  const { data: { user }, error } = await supabase.auth.getUser()
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser()
 
   if (error || !user) {
     console.error('Error fetching user:', error?.message)
@@ -14,4 +17,3 @@ export const getUserFn = createServerFn({
 
   return user
 })
-

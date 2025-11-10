@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
-import { getSupabaseServerClient } from '@/lib/supabase/clientSupabase';
+import { getSupabaseServerClient } from '@/lib/supabase/clientSupabase'
 
 export const loginFn = createServerFn({ method: 'POST' })
   .inputValidator((d: { email: string; password: string }) => d)

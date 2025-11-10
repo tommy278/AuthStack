@@ -1,4 +1,4 @@
-// For utility
+// For utility, merging prettier settings
 
 import * as fs from 'fs';
 import * as path from 'path';
