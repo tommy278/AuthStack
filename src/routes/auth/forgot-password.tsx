@@ -32,6 +32,9 @@ function RouteComponent() {
         }}
         className="form-content"
       >
+        <h1 className="flex justify-center text-3xl font-semibold">
+          Reset password with email
+        </h1>
         <div>
           <form.Field
             name="email"
@@ -50,7 +53,11 @@ function RouteComponent() {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="input-field"
+                  className={`input-field ${
+                    field.state.meta.errors.length > 0
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
                 />
                 {field.state.meta.errors.map((error, i) => (
                   <div key={i} className="text-red-500">

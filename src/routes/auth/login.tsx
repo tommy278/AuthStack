@@ -5,11 +5,10 @@ import { loginFn } from '@/lib/serverFunctions/loginFn'
 import { useUser } from '@/context/UserContext'
 import { Link } from '@tanstack/react-router'
 import { emailSchema, passwordSchema } from '@/lib/helpers/validators'
-import { FcGoogle } from 'react-icons/fc'
-import { FaGithub } from 'react-icons/fa'
-
-const callbackUrl: string =
-  import.meta.env.VITE_APP_CALLBACK_URL || 'http://localhost:3000/auth/callback'
+import DesktopSignin from '@/components/DesktopSignin'
+import MobileSignin from '@/components/MobileSignin'
+import { useViewPort } from '@/context/ViewPort'
+import { mediumViewport } from '@/lib/constants'
 
 export const Route = createFileRoute('/auth/login')({
   component: RouteComponent,
@@ -25,6 +24,8 @@ const loggedInUser: User = { email: '', password: '' }
 function RouteComponent() {
   const navigate = useNavigate()
   const { setUser } = useUser()
+  const { width } = useViewPort()
+
   const form = useForm({
     defaultValues: loggedInUser,
     onSubmit: async ({ value, formApi }) => {
@@ -61,6 +62,9 @@ function RouteComponent() {
         }}
         className="form-content"
       >
+        <h1 className="flex justify-center text-3xl font-semibold">
+          Sign in with email
+        </h1>
         <div>
           <form.Field
             name="email"
@@ -79,7 +83,11 @@ function RouteComponent() {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="input-field"
+                  className={`input-field ${
+                    field.state.meta.errors.length > 0
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
                 />
                 {field.state.meta.errors.map((error, i) => (
                   <div key={i} className="text-red-500">
@@ -105,10 +113,14 @@ function RouteComponent() {
               <>
                 <input
                   placeholder="Password"
-                  className="input-field"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  className={`input-field ${
+                    field.state.meta.errors.length > 0
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
                 />
                 {field.state.meta.errors.map((error, i) => (
                   <div key={i} className="text-red-500">
@@ -130,38 +142,12 @@ function RouteComponent() {
           <button type="submit">Log in</button>
         </div>
 
-        <div className="flex justify-between">
-          <button
-            className="inline-flex cursor-pointer rounded-md bg-blue-500 p-2"
-            type="button"
-            onClick={async () => {
-              await supabase.auth.signInWithOAuth({
-                provider: 'google',
-                options: {
-                  redirectTo: callbackUrl,
-                },
-              })
-            }}
-          >
-            <FcGoogle size={20} />
-            <span className="ml-1 text-gray-200">Log in with Google</span>
-          </button>
-          <button
-            type="button"
-            className="inline-flex cursor-pointer rounded-md bg-gray-400 p-2"
-            onClick={async () => {
-              await supabase.auth.signInWithOAuth({
-                provider: 'github',
-                options: {
-                  redirectTo: callbackUrl,
-                },
-              })
-            }}
-          >
-            <FaGithub size={20} />
-            <span className="ml-1 text-gray-200">Log in with Github</span>
-          </button>
-        </div>
+        {width >= mediumViewport ? (
+          <DesktopSignin />
+        ) : (
+          <MobileSignin text="Or sign in with" />
+        )}
+
         <div className="flex justify-center">
           <span className="mr-1">Don't have an account yet?</span>
           <Link to="/auth/register" className="text-blue-500">

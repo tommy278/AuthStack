@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import Logout from '@/components/Logout'
 import { useUser } from '@/context/UserContext'
 
 export const Route = createFileRoute('/_authed/dashboard/')({
@@ -10,8 +9,7 @@ function RouteComponent() {
   const { user } = useUser()
   return (
     <div>
-      <p>Welcome {user?.id}</p>
-      <Logout />
+      <p> You are {user?.role}</p>
     </div>
   )
 }

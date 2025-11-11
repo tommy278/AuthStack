@@ -2,11 +2,10 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import { supabase } from '@/lib/supabase/supabase'
 import { emailSchema, passwordSchema } from '@/lib/helpers/validators'
-import { FcGoogle } from 'react-icons/fc'
-import { FaGithub } from 'react-icons/fa'
-
-const callbackUrl: string =
-  import.meta.env.VITE_APP_CALLBACK_URL || 'http://localhost:3000/auth/callback'
+import DesktopSignin from '@/components/DesktopSignin'
+import MobileSignin from '@/components/MobileSignin'
+import { useViewPort } from '@/context/ViewPort'
+import { mediumViewport } from '@/lib/constants'
 
 export const Route = createFileRoute('/auth/register')({
   component: RouteComponent,
@@ -27,6 +26,7 @@ const defaultUser: User = {
 }
 
 function RouteComponent() {
+  const { width } = useViewPort()
   const form = useForm({
     defaultValues: defaultUser,
     onSubmit: async ({ value, formApi }) => {
@@ -56,6 +56,9 @@ function RouteComponent() {
         }}
         className="form-content"
       >
+        <h1 className="flex justify-center text-3xl font-semibold">
+          Sign up with email
+        </h1>
         <div>
           <form.Field
             name="name"
@@ -68,7 +71,11 @@ function RouteComponent() {
             children={(field) => (
               <>
                 <input
-                  className="input-field"
+                  className={`input-field ${
+                    field.state.meta.errors.length > 0
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
                   placeholder="Name"
                   value={field.state.value}
                   onBlur={field.handleBlur}
@@ -98,7 +105,11 @@ function RouteComponent() {
               <>
                 <input
                   placeholder="Email"
-                  className="input-field"
+                  className={`input-field ${
+                    field.state.meta.errors.length > 0
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -127,7 +138,11 @@ function RouteComponent() {
               <>
                 <input
                   placeholder="Password"
-                  className="input-field"
+                  className={`input-field ${
+                    field.state.meta.errors.length > 0
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
                   type="password"
                   value={field.state.value}
                   onBlur={field.handleBlur}
@@ -157,7 +172,11 @@ function RouteComponent() {
               <>
                 <input
                   placeholder="Confirm Password"
-                  className="input-field"
+                  className={`input-field ${
+                    field.state.meta.errors.length > 0
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
                   type="password"
                   value={field.state.value}
                   onBlur={field.handleBlur}
@@ -173,42 +192,15 @@ function RouteComponent() {
           />
         </div>
 
-        <div className="flex justify-between">
-          <button
-            className="inline-flex cursor-pointer rounded-md bg-blue-500 p-2"
-            type="button"
-            onClick={async () => {
-              await supabase.auth.signInWithOAuth({
-                provider: 'google',
-                options: {
-                  redirectTo: callbackUrl,
-                },
-              })
-            }}
-          >
-            <FcGoogle size={20} />
-            <span className="ml-1 text-gray-200">Log in with Google</span>
-          </button>
-          <button
-            type="button"
-            className="inline-flex cursor-pointer rounded-md bg-gray-400 p-2"
-            onClick={async () => {
-              await supabase.auth.signInWithOAuth({
-                provider: 'github',
-                options: {
-                  redirectTo: callbackUrl,
-                },
-              })
-            }}
-          >
-            <FaGithub size={20} />
-            <span className="ml-1 text-gray-200">Log in with Github</span>
-          </button>
-        </div>
-
         <button className="button-primary" type="submit">
           Sign Up
         </button>
+
+        {width >= mediumViewport ? (
+          <DesktopSignin />
+        ) : (
+          <MobileSignin text="Or sign up with" />
+        )}
       </form>
     </div>
   )

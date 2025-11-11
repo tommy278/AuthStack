@@ -17,7 +17,7 @@ function AuthedLayout() {
   const { user } = Route.useRouteContext()
   return (
     <div>
-      <h1>Logged In User Area, welcome{user.id}</h1>
+      <h1>Logged In User Area, welcome{user.email}</h1>
       <Outlet />
     </div>
   )
