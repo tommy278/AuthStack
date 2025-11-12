@@ -4,7 +4,6 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import { getUserFn } from '@/lib/serverFunctions/getUserFn'
 import { UserProvider } from '@/context/UserContext'
 import Header from '../components/Header'
-
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({

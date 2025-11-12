@@ -16,7 +16,7 @@ export default function Logout({ onLogout }: LogoutProps) {
       console.error(message)
     } else {
       setUser(null)
-      if (onLogout) onLogout() // close sidebar
+      if (onLogout) onLogout()
       navigate({ to: '/auth/login' })
     }
   }
@@ -24,7 +24,7 @@ export default function Logout({ onLogout }: LogoutProps) {
   return (
     <button
       onClick={handleLogout}
-      className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-800"
+      className="flex cursor-pointer items-center gap-3 rounded-lg bg-red-500 p-3 transition-colors transition-transform duration-150 hover:scale-105"
     >
       Sign Out
     </button>

@@ -1,5 +1,5 @@
 {
-  "name": "authstack",
+  "name": "frontend",
   "private": true,
   "type": "module",
   "scripts": {

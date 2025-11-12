@@ -5,10 +5,8 @@ import { loginFn } from '@/lib/serverFunctions/loginFn'
 import { useUser } from '@/context/UserContext'
 import { Link } from '@tanstack/react-router'
 import { emailSchema, passwordSchema } from '@/lib/helpers/validators'
-import DesktopSignin from '@/components/DesktopSignin'
-import MobileSignin from '@/components/MobileSignin'
-import { useViewPort } from '@/context/ViewPort'
-import { mediumViewport } from '@/lib/constants'
+import DesktopSignin from '@/components/Desktop/DesktopSignin'
+import MobileSignin from '@/components/Mobile/MobileSignin'
 
 export const Route = createFileRoute('/auth/login')({
   component: RouteComponent,
@@ -24,7 +22,6 @@ const loggedInUser: User = { email: '', password: '' }
 function RouteComponent() {
   const navigate = useNavigate()
   const { setUser } = useUser()
-  const { width } = useViewPort()
 
   const form = useForm({
     defaultValues: loggedInUser,
@@ -110,7 +107,7 @@ function RouteComponent() {
               },
             }}
             children={(field) => (
-              <>
+              <div>
                 <input
                   placeholder="Password"
                   value={field.state.value}
@@ -127,7 +124,7 @@ function RouteComponent() {
                     {error}
                   </div>
                 ))}
-              </>
+              </div>
             )}
           />
         </div>
@@ -142,11 +139,8 @@ function RouteComponent() {
           <button type="submit">Log in</button>
         </div>
 
-        {width >= mediumViewport ? (
-          <DesktopSignin />
-        ) : (
-          <MobileSignin text="Or sign in with" />
-        )}
+        <DesktopSignin />
+        <MobileSignin text="Or sign in with" />
 
         <div className="flex justify-center">
           <span className="mr-1">Don't have an account yet?</span>

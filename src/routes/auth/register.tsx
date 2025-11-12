@@ -2,10 +2,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import { supabase } from '@/lib/supabase/supabase'
 import { emailSchema, passwordSchema } from '@/lib/helpers/validators'
-import DesktopSignin from '@/components/DesktopSignin'
-import MobileSignin from '@/components/MobileSignin'
-import { useViewPort } from '@/context/ViewPort'
-import { mediumViewport } from '@/lib/constants'
+import DesktopSignin from '@/components/Desktop/DesktopSignin'
+import MobileSignin from '@/components/Mobile/MobileSignin'
 
 export const Route = createFileRoute('/auth/register')({
   component: RouteComponent,
@@ -26,7 +24,6 @@ const defaultUser: User = {
 }
 
 function RouteComponent() {
-  const { width } = useViewPort()
   const form = useForm({
     defaultValues: defaultUser,
     onSubmit: async ({ value, formApi }) => {
@@ -195,12 +192,8 @@ function RouteComponent() {
         <button className="button-primary" type="submit">
           Sign Up
         </button>
-
-        {width >= mediumViewport ? (
-          <DesktopSignin />
-        ) : (
-          <MobileSignin text="Or sign up with" />
-        )}
+        <DesktopSignin />
+        <MobileSignin text="Or sign up with" />
       </form>
     </div>
   )
