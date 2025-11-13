@@ -44,7 +44,6 @@ function RouteComponent() {
           data: { user: loggedInUser },
         } = await supabase.auth.getUser()
         setUser(loggedInUser)
-
         navigate({ to: '/dashboard' })
       }
     },

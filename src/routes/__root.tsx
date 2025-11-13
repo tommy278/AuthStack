@@ -27,7 +27,7 @@ export const Route = createRootRoute({
       },
     ],
   }),
-  loader: async () => {
+  beforeLoad: async () => {
     const user = await getUserFn()
     return { user }
   },
@@ -35,13 +35,14 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { user } = Route.useRouteContext()
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
-        <UserProvider>
+        <UserProvider initialUser={user}>
           <Header />
           {children}
         </UserProvider>

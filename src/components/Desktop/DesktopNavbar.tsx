@@ -14,20 +14,20 @@ export default function DesktopNavbar() {
           <>
             <Link
               to="/auth/login"
-              className="flex items-center gap-3 rounded-lg p-3 transition-colors transition-transform duration-150 hover:scale-105 hover:bg-blue-700"
+              className="flex items-center gap-3 rounded-lg border border-white p-3 transition-colors transition-transform duration-150 hover:scale-105 hover:bg-blue-700"
               activeProps={{
                 className:
-                  'flex items-center gap-3 p-3 rounded-lg bg-cyan-500 hover:bg-cyan-600 transition-colors',
+                  'flex items-center gap-3 p-3 rounded-lg bg-cyan-500 hover:bg-cyan-600 transition-colors border-none',
               }}
             >
               Log In
             </Link>
             <Link
               to="/auth/register"
-              className="flex items-center gap-3 rounded-lg p-3 transition-colors transition-transform duration-150 hover:scale-105 hover:bg-blue-700"
+              className="flex items-center gap-3 rounded-lg border border-white p-3 transition-colors transition-transform duration-150 hover:scale-105 hover:bg-blue-700"
               activeProps={{
                 className:
-                  'flex items-center gap-3 p-3 rounded-lg bg-cyan-500 hover:bg-cyan-600 transition-colors',
+                  'flex items-center gap-3 p-3 rounded-lg bg-cyan-500 hover:bg-cyan-600 transition-colors border-none',
               }}
             >
               Register

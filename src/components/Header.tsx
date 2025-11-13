@@ -3,14 +3,16 @@ import { useState } from 'react'
 import { Menu } from 'lucide-react'
 import MobileNavbar from '@/components/Mobile/MobileNavbar'
 import DesktopNavbar from '@/components/Desktop/DesktopNavbar'
+import { useUser } from '@/context/UserContext'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const { user } = useUser()
   return (
     <>
       <header className="flex items-center justify-between bg-blue-900 p-4 text-white shadow-lg">
         <h1 className="ml-3 text-2xl font-semibold">
-          <Link to="/">My App</Link>
+          <Link to={user ? '/dashboard' : '/'}>My App</Link>
         </h1>
         <button
           onClick={() => setIsOpen(true)}
