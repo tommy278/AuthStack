@@ -31,6 +31,12 @@ function RouteComponent() {
         const { error } = await supabase.auth.signUp({
           email: value.email,
           password: value.password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
+            data: {
+              display_name: value.name,
+            },
+          },
         })
 
         if (error) {

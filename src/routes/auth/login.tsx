@@ -22,7 +22,7 @@ function RouteComponent() {
 
   const form = useForm({
     defaultValues: loggedInUser,
-    onSubmit: async ({ value, formApi }) => {
+    onSubmit: async ({ value }) => {
       console.log(value)
       const { error, message } = await loginFn({
         data: {
@@ -35,7 +35,6 @@ function RouteComponent() {
         console.error(message)
       } else {
         alert(message)
-        formApi.reset()
         router.invalidate({ sync: true })
         router.navigate({ to: '/dashboard' })
       }
