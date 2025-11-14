@@ -9,7 +9,9 @@ function RouteComponent() {
   const { user } = ParentRoute.useRouteContext()
   return (
     <div>
-      <h1>Welcome {user?.email}</h1>
+      <h1 className="mt-10 flex justify-center text-3xl font-semibold text-sky-400">
+        Welcome {user?.email} !!
+      </h1>
     </div>
   )
 }
