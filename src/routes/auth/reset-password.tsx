@@ -1,8 +1,6 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
-import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/supabase'
-import { useNavigate } from '@tanstack/react-router'
 import { passwordSchema } from '@/lib/helpers/validators'
 
 export const Route = createFileRoute('/auth/reset-password')({
@@ -10,30 +8,7 @@ export const Route = createFileRoute('/auth/reset-password')({
 })
 
 function RouteComponent() {
-  const [sessionReady, setSessionReady] = useState(false)
-  const navigate = useNavigate()
   const router = useRouter()
-
-  useEffect(() => {
-    const checkSession = async () => {
-      const { data, error } = await supabase.auth.getSession()
-
-      if (error) {
-        console.error('Error fetching session:', error)
-        alert('Something went wrong checking the session')
-        return
-      }
-
-      if (data.session) {
-        setSessionReady(true)
-      } else {
-        alert(
-          'Session not found. Please use the password reset link from your email.'
-        )
-      }
-    }
-    checkSession()
-  }, [])
 
   interface Passwords {
     newPassword: string
@@ -44,32 +19,27 @@ function RouteComponent() {
 
   const passwordForm = useForm({
     defaultValues: defaultPasswords,
-    onSubmit: async ({ value, formApi }) => {
-      if (value.newPassword === value.confirmPassword) {
-        const { error } = await supabase.auth.updateUser({
-          password: value.newPassword,
-        })
-        formApi.reset()
-
-        if (error) {
-          console.log(error)
-          alert('Something went wrong updating password')
-        } else {
-          alert('Password successfully updated. You can log in now.')
-          router.invalidate({ sync: true })
-          navigate({ to: '/auth/login' })
-        }
-      } else {
-        console.error('Passwords do not match')
+    onSubmit: async ({ value }) => {
+      if (value.newPassword !== value.confirmPassword) {
         alert('Passwords do not match')
         return
       }
+
+      const { error } = await supabase.auth.updateUser({
+        password: value.newPassword,
+      })
+
+      if (error) {
+        alert('Something went wrong. Please try logging in again')
+        console.error(error)
+        return
+      }
+
+      alert('Password updated! Please log in.')
+      router.invalidate({ sync: true })
+      router.navigate({ to: '/auth/login' })
     },
   })
-
-  if (!sessionReady) {
-    return <p>Checking session...</p>
-  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
@@ -100,6 +70,7 @@ function RouteComponent() {
                 <input
                   placeholder="New Password"
                   type="password"
+                  autoComplete="new-password"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -134,6 +105,7 @@ function RouteComponent() {
                 <input
                   placeholder="Confirm Password"
                   type="password"
+                  autoComplete="new-password"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}

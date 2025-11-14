@@ -77,6 +77,8 @@ function RouteComponent() {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  type="text"
+                  autoComplete="name"
                 />
                 {field.state.meta.errors.map((error, i) => (
                   <div key={i} className="text-red-500">
@@ -110,6 +112,8 @@ function RouteComponent() {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  type="email"
+                  autoComplete="email"
                 />
                 {field.state.meta.errors.map((error, i) => (
                   <div key={i} className="text-red-500">
@@ -141,6 +145,7 @@ function RouteComponent() {
                       : 'border-gray-300 focus:ring-blue-500'
                   }`}
                   type="password"
+                  autoComplete="new-password"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -175,6 +180,7 @@ function RouteComponent() {
                       : 'border-gray-300 focus:ring-blue-500'
                   }`}
                   type="password"
+                  autoComplete="new-password"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}

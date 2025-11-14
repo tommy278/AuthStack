@@ -69,6 +69,8 @@ function RouteComponent() {
               <>
                 <input
                   placeholder="Email"
+                  type="email"
+                  autoComplete="email"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -102,6 +104,8 @@ function RouteComponent() {
               <div>
                 <input
                   placeholder="Password"
+                  type="password"
+                  autoComplete="current-password"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
