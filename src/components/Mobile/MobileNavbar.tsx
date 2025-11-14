@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Home, X } from 'lucide-react'
+import { Home, X, LogIn, Plus } from 'lucide-react'
 import Logout from '@/components/Logout'
 import { Route as ParentRoute } from '@/routes/__root'
 
@@ -56,6 +56,7 @@ export default function MobileNavbar(props: MobileNavbarProps) {
                     'flex items-center gap-3 p-3 rounded-lg bg-cyan-500 hover:bg-cyan-600 transition-colors',
                 }}
               >
+                <LogIn size={20} />
                 Log In
               </Link>
 
@@ -68,6 +69,7 @@ export default function MobileNavbar(props: MobileNavbarProps) {
                     'flex items-center gap-3 p-3 rounded-lg bg-cyan-500 hover:bg-cyan-600 transition-colors',
                 }}
               >
+                <Plus size={20} />
                 Register
               </Link>
             </>

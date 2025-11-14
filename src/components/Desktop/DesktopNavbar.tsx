@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import Logout from '@/components/Logout'
 import { Route as ParentRoute } from '@/routes/__root'
+import { LogIn, Plus } from 'lucide-react'
 
 export default function DesktopNavbar() {
   const { user } = ParentRoute.useRouteContext()
@@ -20,6 +21,7 @@ export default function DesktopNavbar() {
                   'flex items-center gap-3 p-3 rounded-lg bg-cyan-500 hover:bg-cyan-600 transition-colors border-none',
               }}
             >
+              <LogIn size={20} />
               Log In
             </Link>
             <Link
@@ -30,6 +32,7 @@ export default function DesktopNavbar() {
                   'flex items-center gap-3 p-3 rounded-lg bg-cyan-500 hover:bg-cyan-600 transition-colors border-none',
               }}
             >
+              <Plus size={20} />
               Register
             </Link>
           </>

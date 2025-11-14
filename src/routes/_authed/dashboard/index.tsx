@@ -9,7 +9,7 @@ function RouteComponent() {
   const { user } = ParentRoute.useRouteContext()
   return (
     <div>
-      <p> You are {user ? user.id : 'Hello, world!'}</p>
+      <h1>Welcome {user?.email}</h1>
     </div>
   )
 }
