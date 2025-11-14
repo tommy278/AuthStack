@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router'
-import { useUser } from '@/context/UserContext'
 import Logout from '@/components/Logout'
+import { Route as ParentRoute } from '@/routes/__root'
 
 export default function DesktopNavbar() {
-  const { user } = useUser()
+  const { user } = ParentRoute.useRouteContext()
 
   return (
     <div className="flex hidden items-center md:block">

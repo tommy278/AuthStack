@@ -1,9 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/supabase'
 import { useNavigate } from '@tanstack/react-router'
-import { useUser } from '@/context/UserContext'
 import { passwordSchema } from '@/lib/helpers/validators'
 
 export const Route = createFileRoute('/auth/reset-password')({
@@ -13,7 +12,7 @@ export const Route = createFileRoute('/auth/reset-password')({
 function RouteComponent() {
   const [sessionReady, setSessionReady] = useState(false)
   const navigate = useNavigate()
-  const { setUser } = useUser()
+  const router = useRouter()
 
   useEffect(() => {
     const checkSession = async () => {
@@ -57,7 +56,7 @@ function RouteComponent() {
           alert('Something went wrong updating password')
         } else {
           alert('Password successfully updated. You can log in now.')
-          setUser(null)
+          router.invalidate({ sync: true })
           navigate({ to: '/auth/login' })
         }
       } else {

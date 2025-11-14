@@ -2,7 +2,6 @@ import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { getUserFn } from '@/lib/serverFunctions/getUserFn'
-import { UserProvider } from '@/context/UserContext'
 import Header from '../components/Header'
 import appCss from '../styles.css?url'
 
@@ -35,17 +34,14 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { user } = Route.useRouteContext()
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
-        <UserProvider initialUser={user}>
-          <Header />
-          {children}
-        </UserProvider>
+        <Header />
+        {children}
         <TanStackDevtools
           config={{
             position: 'bottom-right',

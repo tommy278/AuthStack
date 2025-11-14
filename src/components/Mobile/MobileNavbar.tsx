@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Home, X } from 'lucide-react'
 import Logout from '@/components/Logout'
-import { useUser } from '@/context/UserContext'
+import { Route as ParentRoute } from '@/routes/__root'
 
 interface MobileNavbarProps {
   isOpen: boolean | null
@@ -10,7 +10,7 @@ interface MobileNavbarProps {
 
 export default function MobileNavbar(props: MobileNavbarProps) {
   const { isOpen, setIsOpen } = props ?? {}
-  const { user } = useUser()
+  const { user } = ParentRoute.useRouteContext()
   return (
     <>
       <aside

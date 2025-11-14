@@ -1,23 +1,21 @@
-import { useNavigate } from '@tanstack/react-router'
+import { useRouter } from '@tanstack/react-router'
 import { logoutFn } from '@/lib/serverFunctions/logoutFn'
-import { useUser } from '@/context/UserContext'
 
 interface LogoutProps {
   onLogout?: () => void
 }
 
 export default function Logout({ onLogout }: LogoutProps) {
-  const navigate = useNavigate()
-  const { setUser } = useUser()
+  const router = useRouter()
 
   const handleLogout = async () => {
     const { error, message } = await logoutFn()
     if (error) {
       console.error(message)
     } else {
-      setUser(null)
       if (onLogout) onLogout()
-      navigate({ to: '/auth/login' })
+      router.invalidate({ sync: true })
+      router.navigate({ to: '/auth/login' })
     }
   }
 

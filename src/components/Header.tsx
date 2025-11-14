@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { Menu } from 'lucide-react'
 import MobileNavbar from '@/components/Mobile/MobileNavbar'
 import DesktopNavbar from '@/components/Desktop/DesktopNavbar'
-import { useUser } from '@/context/UserContext'
+import { Route as ParentRoute } from '@/routes/__root'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
-  const { user } = useUser()
+  const { user } = ParentRoute.useRouteContext()
   return (
     <>
       <header className="flex items-center justify-between bg-blue-900 p-4 text-white shadow-lg">

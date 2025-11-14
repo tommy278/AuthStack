@@ -1,8 +1,6 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
-import { supabase } from '@/lib/supabase/supabase'
 import { loginFn } from '@/lib/serverFunctions/loginFn'
-import { useUser } from '@/context/UserContext'
 import { Link } from '@tanstack/react-router'
 import { emailSchema, passwordSchema } from '@/lib/helpers/validators'
 import DesktopSignin from '@/components/Desktop/DesktopSignin'
@@ -20,8 +18,7 @@ interface User {
 const loggedInUser: User = { email: '', password: '' }
 
 function RouteComponent() {
-  const navigate = useNavigate()
-  const { setUser } = useUser()
+  const router = useRouter()
 
   const form = useForm({
     defaultValues: loggedInUser,
@@ -39,12 +36,8 @@ function RouteComponent() {
       } else {
         alert(message)
         formApi.reset()
-
-        const {
-          data: { user: loggedInUser },
-        } = await supabase.auth.getUser()
-        setUser(loggedInUser)
-        navigate({ to: '/dashboard' })
+        router.invalidate({ sync: true })
+        router.navigate({ to: '/dashboard' })
       }
     },
   })
