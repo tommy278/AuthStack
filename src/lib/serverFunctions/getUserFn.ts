@@ -11,7 +11,6 @@ export const getUserFn = createServerFn({
   } = await supabase.auth.getUser()
 
   if (error || !user) {
-    console.error('Error fetching user:', error?.message)
     return null
   }
 
